@@ -751,3 +751,82 @@ cd HelloWorld/
 python manage.py runserver 0.0.0.0:8000
 python manage.py runserver 156.232.128.30:8000
 python manage.py runserver 0.0.0.0:8000
+yum –y install git
+yum – install git
+yum install git
+git
+git push
+git init
+git add .
+git commit -m "add readme"
+git remote add origin https://github.com/kgbbtest/test.git
+git push -u origin master
+python do.py record
+cd python_email/
+python do.py record
+python do.py sendall
+python do.py record
+python do.py iptable
+python do.py sendall
+python do.py record
+python do.py iptable
+python do.py sendall
+cd python_email/
+python do.py iptable
+python do.py sendall
+cd python_email/
+python do.py record
+python do.py sendall
+python do.py record
+cd python_email/
+python do.py
+python do.py iptable
+cd python_email/
+python do.py
+python do.py record
+cd 
+cd python_email/
+python do.py sendall
+python do.py iptable
+python do.py sendall
+python do.py record
+yum install screen
+screen -S pythonemail
+screen -r pythonemail
+screen -ls
+screen -S pythonemail
+screen -ls
+screen -r 31474
+screen -ls
+screen -r 31474
+screen -ls
+screen -r 31474
+screen -ls
+screen -r 31474
+screen -ls
+screen -r 31747
+screen -r 31474
+vi /var/spool/mail/root
+ls
+screen -ld
+screen -ls
+screen -r 31474
+screen -ls
+screen -r 31474
+screen -ls
+screen -r 31474
+screen -ld
+screen -ls
+screen -r 31474
+vi /var/spool/mail/root
+screen -r 31474
+
+screen -r 31474
+screen -S send
+screen -r 31474
+screen -r 17114
+screen -ls
+screen -r 17114
+for((i=1;i<=10;i++));   do    echo $(expr $i \* 3 + 1);   done
+for((i=1;i<=10;i++));  do   echo $(expr $i \* 3 + 1); echo 2; done
+screen -r 17114

@@ -16,6 +16,7 @@ import opendkim
 import statistics
 import iptable
 import random
+import verifyemail
 
 
 reload(sys)
@@ -51,26 +52,37 @@ def mail(useremail,donum,all_num,time_now):
 		message['Message-ID'] = "<" + str(time.time()) +sender+ ">"
 		message['X-Mailer']='Afterlogic webmail client'
 		message_str=message.as_string().replace('From: '+sender+'\n','').replace('from2: from2\n','From: '+sender+'\n')
-		deal_email_data.sendmail(message['From'],message['To'],message_str)
-		message_detail = message['From']+' sendto '+useremail
-		left=all_num-donum
-		percent=(donum/all_num)*100
-		timeuse=time.time()-time_now
 	except :
-	    print "Error: 无法发送邮件"
+		with open('res/useremail.txt','a+') as f:
+					f.write('\n'+useremail)
 	else:
-		record_process = str(percent)+'%'+'  deal '+str(donum)+' message  left '+str(left)+'  use '+str(timeuse)+'s  '+message_detail+'\n'
-		with open('res/progress.txt','a+') as f:
-			f.write(record_process)
-		print record_process.replace("\n", "")
+		try:
+			deal_email_data.sendmail(message['From'],message['To'],message_str)
+			message_detail = message['From']+' sendto '+useremail
+			left=all_num-donum
+			percent=(donum/all_num)*100
+			timeuse=time.time()-time_now
+		except smtplib.SMTPException as e:
+			print e
+			if e[0]==550:
+				with open('res/useremail.txt','a+') as f:
+					f.write('\n'+useremail)
+		else:
+			record_process = str(percent)+'%'+'  deal '+str(donum)+' message  left '+str(left)+'  use '+str(timeuse)+'s  '+message_detail+'\n'
+			with open('res/progress.txt','a+') as f:
+				f.write(record_process)
+			print record_process.replace("\n", "")
 def mail_record():
 	with open('res/progress.txt','r') as fr:
 		record_one= fr.readlines()[-1]
 		record_mail = record_one.split('sendto ')[1].replace('"', '').replace("\n", "").replace(' ', '').strip().replace('	', '')
-	undomail=open("res/useremail.txt","r").read().split(record_mail)[1]
-	with open('res/useremail.txt','w') as f:
-		f.write("\n"+undomail)
-	print '记录进度成功！'+record_one
+	try:
+		undomail=open("res/useremail.txt","r").read().split(record_mail)[1]
+		with open('res/useremail.txt','w') as f:
+			f.write("\n"+undomail)
+		print '记录进度成功！'+record_one
+	except :
+		print "记录失败请稍后再试！"
 def sendemail():
 	os.system('rm -rf /var/log/maillog')
 	os.system('chmod 777 -R /var/log')
@@ -84,11 +96,15 @@ def sendemail():
 		if iptable_reset % 200==0:
 			os.system('python do.py iptable ')
 		mail(useremail,useremails.index(useremail),all_num,time_now)
-		time.sleep(random.randint(12,20))
+		time.sleep(random.randint(22,30))
+def checkmail():
+	verifyemail.checkmail()
 if sys.argv[1]=='record':	
 		mail_record()
 elif sys.argv[1]=='sendall':
 		sendemail()
+elif sys.argv[1]=='checkmail':
+		checkmail()
 elif sys.argv[1]=='dnspod':
 	try:
 		 dnspod.dnspod(sys.argv[2])

@@ -106,8 +106,12 @@ def rand_words(type_words):
   words={}
   index_url = 'http://api.t.sina.com.cn/short_url/shorten.json?source=3271760578&url_long=https://bfyx88.com/?ccid='+str(random.randint(0,9000000))
   url_down = 'http://api.t.sina.com.cn/short_url/shorten.json?source=3271760578&url_long=https://bfqp99.com/?ccid='+str(random.randint(0,9000000))
-  index_url = json.loads(requests.get(index_url).text)[0]['url_short'].replace('http://','')
-  url_down = json.loads(requests.get(url_down).text)[0]['url_short'].replace('http://','')
+  try:
+    index_url = json.loads(requests.get(index_url).text)[0]['url_short'].replace('http://','')
+    url_down = json.loads(requests.get(url_down).text)[0]['url_short'].replace('http://','')
+  except :
+    index_url='bfyx88.com/?ccid='+str(random.randint(0,9000000))
+    url_down = 'bfqp99.com/?ccid='+str(random.randint(0,9000000))
   words['subject']=['（滿'+w('ju')+'獎》', '（返5%'+w('shui')+'》', '《'+w('chong')+'送）']
   random.shuffle(words['subject'])
   words['txt']=['，'+w('zhu')+w('ce')+'；'+index_url  +'，','，'+w('xia')+w('zai')+'；'+url_down +'，','，'+'必'+' '+'，'+' '+'發'+'，','，'+w('bu')+w('yu')+'，','，'+w('bai')+w('jia')+w('le')+'，','，'+w('niu')+w('niu')+'，','，'+w('dou')+w('di')+w('zhu')+'，']
